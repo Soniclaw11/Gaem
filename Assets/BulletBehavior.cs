@@ -21,8 +21,8 @@ public class BulletBehavior : MonoBehaviour
         Destroy(gameObject);
         if (collision.gameObject.tag == "Player")
         {
-            // Add knockback to player in direction bullet was traveling and at a force that is 30% of its velocity
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(gameObject.GetComponent<Rigidbody2D>().velocity * 0.7f);
+            // Add knockback to player in direction bullet was traveling
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(gameObject.GetComponent<Rigidbody2D>().velocity * 2f);
         }
     }
 }
