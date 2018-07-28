@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
-{
-    Rigidbody2D rb;
-    Rigidbody2D victimRigidbody;
-
+{ 
 	// Use this for initialization
 	void Start ()
     {
@@ -25,11 +22,7 @@ public class BulletBehavior : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             // Add knockback to player in direction bullet was traveling and at a force that is 30% of its velocity
-            //collision.gameObject.GetComponent<Rigidbody2D>().AddForce(gameObject.GetComponent<Rigidbody2D>().velocity * 0.3f);
-        }
-        else
-        {
-            //Destroy(gameObject);
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(gameObject.GetComponent<Rigidbody2D>().velocity * 0.7f);
         }
     }
 }
