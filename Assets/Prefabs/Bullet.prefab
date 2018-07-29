@@ -23,9 +23,10 @@ GameObject:
   - component: {fileID: 61513141630621576}
   - component: {fileID: 50329190106746308}
   - component: {fileID: 114563808885319438}
+  - component: {fileID: 114710078394247170}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +73,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.005, y: 0.02}
@@ -99,6 +100,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b33cbe33a5f7d7c4f8092b41c8b5b19b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114710078394247170
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1525108113335296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dc16552b20dbe2438cca8aab9f14ee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sendTriggerMessage: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  skinWidth: 0.1
 --- !u!212 &212854934976802260
 SpriteRenderer:
   m_ObjectHideFlags: 1

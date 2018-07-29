@@ -16,7 +16,7 @@ public class Player2Controller : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        bulletSpeed = 6500.0f;
+        bulletSpeed = 300000.0f;
         canShoot = true;
         moveHorizontal = 0.0f;
         moveVertical = 0.0f;
@@ -59,10 +59,10 @@ public class Player2Controller : MonoBehaviour
 
         // Rotate character during key presses
         if (Input.GetKey(KeyCode.M))
-            transform.Rotate(Vector3.forward * -5);
+            transform.Rotate(Vector3.forward * -4);
 
         if (Input.GetKey(KeyCode.N))
-            transform.Rotate(Vector3.forward * 5);
+            transform.Rotate(Vector3.forward * 4);
 
         // Shoot bullets when key pressed. Sets canShoot to false and then starts a one-second timer to set it to true again
         if (Input.GetKeyDown(KeyCode.Comma) && canShoot)
@@ -70,7 +70,7 @@ public class Player2Controller : MonoBehaviour
             Rigidbody2D bullet;
             // About the bullet position; we change the spawn point of the bullet from the center of the character to the tip of the gun
             bullet = Instantiate(bulletPrefab, transform.position + transform.right * 0.2f + transform.up * 0.7f, transform.rotation);
-            bullet.velocity = transform.rotation * Vector2.up * bulletSpeed * Time.deltaTime;
+            bullet.AddForce(transform.rotation * Vector2.up * bulletSpeed * Time.deltaTime);
 
             canShoot = false;
             coroutine = shootTimer(1.0f);

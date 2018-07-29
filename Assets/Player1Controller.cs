@@ -14,9 +14,9 @@ public class Player1Controller : MonoBehaviour
     private float bulletSpeed;
 
 	// Use this for initialization
-	void Start ()
+	void Start()
     {
-        bulletSpeed = 6500.0f;
+        bulletSpeed = 300000.0f;
         canShoot = true;
         moveHorizontal = 0.0f;
         moveVertical = 0.0f;
@@ -25,7 +25,7 @@ public class Player1Controller : MonoBehaviour
     }
 	
 	// Update is called once per frame
-	void Update ()
+	void Update()
     {
         // Set speed in cardinal directions when keyboard key is pressed
         if (Input.GetKeyDown(KeyCode.W))
@@ -70,7 +70,7 @@ public class Player1Controller : MonoBehaviour
             Rigidbody2D bullet;
             // About the bullet position; we change the spawn point of the bullet from the center of the character to the tip of the gun
             bullet = Instantiate(bulletPrefab, transform.position + transform.right * 0.2f + transform.up * 0.7f, transform.rotation);
-            bullet.velocity = transform.rotation * Vector2.up * bulletSpeed /* * Time.deltaTime */;
+            bullet.AddForce(transform.rotation * Vector2.up * bulletSpeed * Time.deltaTime);
 
             canShoot = false;
             coroutine = shootTimer(1.0f);

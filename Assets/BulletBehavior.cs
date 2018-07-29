@@ -16,13 +16,13 @@ public class BulletBehavior : MonoBehaviour
 		
 	}
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         Destroy(gameObject);
         if (collision.gameObject.tag == "Player")
         {
-            // Add knockback to player in direction bullet was traveling
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(gameObject.GetComponent<Rigidbody2D>().velocity * 2f);
+            // Add knockback to player in direction bullet was traveling at a force of 20 times the velocity
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(gameObject.GetComponent<Rigidbody2D>().velocity * 20);
         }
     }
 }
