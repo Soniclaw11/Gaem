@@ -7,7 +7,7 @@ public class BulletBehavior : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        
+        //e
     }
 	
 	// Update is called once per frame
