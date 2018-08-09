@@ -23,9 +23,8 @@ public class Player1Controller : MonoBehaviour
         speedValue = 250 * Time.deltaTime;
         rb = gameObject.GetComponent<Rigidbody2D>();
     }
-	
-	// Update is called once per frame
-	void Update()
+
+    private void FixedUpdate()
     {
         // Set speed in cardinal directions when keyboard key is pressed
         if (Input.GetKeyDown(KeyCode.W))
@@ -56,7 +55,11 @@ public class Player1Controller : MonoBehaviour
 
         // Access current speed values in each direction and apply them to the object
         rb.velocity = new Vector2(moveHorizontal, moveVertical);
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
         // Rotate character during key presses
         if (Input.GetKey(KeyCode.H))
             transform.Rotate(Vector3.forward * -4);

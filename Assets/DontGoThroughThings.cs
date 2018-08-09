@@ -7,8 +7,8 @@ public class DontGoThroughThings : MonoBehaviour
     // events to be fired - but it won't pass through the trigger
     public bool sendTriggerMessage = false;
 
-    public LayerMask layerMask = -1; //make sure we aren't in this layer 
-    public float skinWidth = 0.1f; //probably doesn't need to be changed 
+    public LayerMask layerMask = -1; // make sure we aren't in this layer 
+    public float skinWidth = 0.1f; // probably doesn't need to be changed 
 
     private float minimumExtent;
     private float partialExtent;
@@ -30,7 +30,7 @@ public class DontGoThroughThings : MonoBehaviour
 
     void FixedUpdate()
     {
-        //have we moved more than our minimum extent? 
+        // have we moved more than our minimum extent? 
         Vector2 movementThisStep = myRigidbody.position - previousPosition;
         float movementSqrMagnitude = movementThisStep.sqrMagnitude;
 
@@ -38,7 +38,7 @@ public class DontGoThroughThings : MonoBehaviour
         {
             float movementMagnitude = Mathf.Sqrt(movementSqrMagnitude);
 
-            //check for obstructions we might have missed 
+            // check for obstructions we might have missed 
             RaycastHit2D hitInfo = Physics2D.Raycast(previousPosition, movementThisStep, movementMagnitude, layerMask.value, 0, 0);
             if (!hitInfo.collider)
                 return;

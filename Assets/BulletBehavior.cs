@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
-    bool hasRebounded;
+    private bool hasRebounded;
+    private Rigidbody2D rb;
+    private Vector3 oldVelocity;
 
 	// Use this for initialization
 	void Start ()
     {
         hasRebounded = false;
+        rb = gameObject.GetComponent<Rigidbody2D>();
     }
 	
 	// Update is called once per frame
@@ -18,7 +21,12 @@ public class BulletBehavior : MonoBehaviour
 		
 	}
 
-    private void OnCollisionEnter2D(Collider2D collision)
+    void FixedUpdate()
+    {
+        oldVelocity = rb.velocity;  // store velocity every frame to use in ricochet physics calculations
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
@@ -32,15 +40,23 @@ public class BulletBehavior : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-            else
+            else  // else, calculate ricochet physics
             {
-                // mark that the bullet has now rebounded once
+                // mark that the bullet has now rebounded for the first time
                 hasRebounded = true;
 
-                // move on to calculate ricochet physics
+                // get the point of contact
+                ContactPoint2D contact = collision.contacts[0];  
 
-                // get point of contact with wall and bullet
-                ContactPoint2D contact = collision.contacts[0];
+                // reflect the old velocity off the wall's normal (perpendicular) vector
+                Vector3 reflectedVelocity = Vector3.Reflect(oldVelocity, contact.normal);
+
+                // assign the reflected velocity to the rigidbody
+                rb.velocity = reflectedVelocity;
+
+                // rotate the object by the same amount we changed its velocity
+                Quaternion rotation = Quaternion.FromToRotation(oldVelocity, reflectedVelocity);
+                transform.rotation = rotation * transform.rotation;
             }
         }
     }
