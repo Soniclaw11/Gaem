@@ -7,12 +7,14 @@ public class BulletBehavior : MonoBehaviour
     private bool hasRebounded;
     private Rigidbody2D rb;
     private Vector3 oldVelocity;
+    private Vector3 startingPos;
 
 	// Use this for initialization
 	void Start ()
     {
         hasRebounded = false;
         rb = gameObject.GetComponent<Rigidbody2D>();
+        startingPos = transform.position;
     }
 	
 	// Update is called once per frame
@@ -42,6 +44,8 @@ public class BulletBehavior : MonoBehaviour
             }
             else  // else, calculate ricochet physics
             {
+                Debug.DrawLine(startingPos, transform.position, Color.blue, 10000000.0f, false);
+
                 // mark that the bullet has now rebounded for the first time
                 hasRebounded = true;
 

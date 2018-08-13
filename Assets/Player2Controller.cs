@@ -28,7 +28,7 @@ public class Player2Controller : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
 
         crosshair = new GameObject("Crosshair");
-        crosshairSprite = Sprite.Create(crosshairTexture, new Rect(0.0f, 0.0f, crosshairTexture.width, crosshairTexture.height), new Vector2(0.5f, 0.5f), 65.0f);
+        crosshairSprite = Sprite.Create(crosshairTexture, new Rect(0.0f, 0.0f, crosshairTexture.width, crosshairTexture.height), new Vector2(0.5f, 0.5f), 50.0f);
         crosshairRenderer = crosshair.AddComponent<SpriteRenderer>();
         crosshairRenderer.sprite = crosshairSprite;
     }
@@ -79,7 +79,7 @@ public class Player2Controller : MonoBehaviour
         // Crosshair positioning: Raycast ahead the distance the bullet is 100% accurate to the crosshair (see if/else below)
         int layerMask = 1 << 2;
         layerMask = ~layerMask;  // Inverts bitmask so that the ray collides against everything not in layer 2 (bullets are in layer 2)
-        RaycastHit2D raycastInfo = Physics2D.Raycast(transform.position + transform.right * 0.2f + transform.up * 0.7f, transform.rotation * Vector2.up, 13.0f, layerMask);
+        RaycastHit2D raycastInfo = Physics2D.Raycast(transform.position + transform.right * 0.2f + transform.up * 0.7f, transform.rotation * Vector2.up, 9.0f, layerMask);
         if (raycastInfo.collider)  // if the ray hit a collider, place crosshair at the place the ray collided
         {
             crosshair.transform.position = raycastInfo.point;
@@ -87,7 +87,7 @@ public class Player2Controller : MonoBehaviour
         else  //if it didn't, place the crosshair at the end of the ray
         {
             Ray2D ray = new Ray2D(transform.position + transform.right * 0.2f + transform.up * 0.7f, transform.rotation * Vector2.up);
-            crosshair.transform.position = ray.GetPoint(13.0f);
+            crosshair.transform.position = ray.GetPoint(9.0f);
         }
         crosshair.transform.rotation = transform.rotation;
 
@@ -97,12 +97,27 @@ public class Player2Controller : MonoBehaviour
             Rigidbody2D bullet;
             // About the bullet position; we change the spawn point of the bullet from the center of the character to the tip of the gun
             bullet = Instantiate(bulletPrefab, transform.position + transform.right * 0.2f + transform.up * 0.7f, transform.rotation);
-            bullet.AddForce(transform.rotation * Vector2.up * bulletSpeed * Time.deltaTime);
+
+            // Randomizing bullet trajectory:
+
+            // Get the original trajectory in the form of a vector2
+            Vector2 originalUnitCircleValue = transform.rotation * Vector2.up;
+
+            // Turn that vector2 into an angle in radians by taking the x value and doing inverse cos
+            float originalAngle = Mathf.Acos(originalUnitCircleValue.x);
+
+            // Randomize the angle a bit by adding a value in radians between -pi/180 and pi/180 (this will only randomize it enough for the bullet to still go through the crosshair)
+            float newAngle = originalAngle + Random.Range(-Mathf.PI / 180.0f, Mathf.PI / 180.0f);
+
+            // Convert the angle back to vector2 using cos and sin
+            Vector2 newUnitCircleValue = new Vector2(Mathf.Cos(newAngle), Mathf.Sin(newAngle));
+
+            bullet.AddForce(newUnitCircleValue * bulletSpeed * Time.deltaTime);
             bullet.gameObject.layer = 2;  // move bullet to a separate layer so that the crosshair raycast does not run into it
 
             canShoot = false;
-            coroutine = shootTimer(1.0f);
-            StartCoroutine(coroutine);
+            coroutine = shootTimer(1.0f);  
+            StartCoroutine(coroutine);  // start timer that will turn canShoot back to true after one second
         }
     }
 

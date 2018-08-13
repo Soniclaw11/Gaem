@@ -145,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 50329190106746308, guid: 37a33bf1ff8cb4445b75b74b81aefdd9,
     type: 2}
+  crosshairTexture: {fileID: 2800000, guid: c441782193a37624a895edd98177b919, type: 3}
 --- !u!212 &138523890
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -619,6 +620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 50329190106746308, guid: 37a33bf1ff8cb4445b75b74b81aefdd9,
     type: 2}
+  crosshairTexture: {fileID: 0}
 --- !u!61 &626527178
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -629,7 +631,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0.005, y: 0.015}
   m_SpriteTilingProperty:
