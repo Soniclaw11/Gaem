@@ -8,6 +8,7 @@ public class BulletBehavior : MonoBehaviour
     private Rigidbody2D rb;
     private Vector3 oldVelocity;
     private Vector3 startingPos;
+    public int damageValue;
 
 	// Use this for initialization
 	void Start ()
@@ -50,7 +51,7 @@ public class BulletBehavior : MonoBehaviour
                 hasRebounded = true;
 
                 // get the point of contact
-                ContactPoint2D contact = collision.contacts[0];  
+                ContactPoint2D contact = collision.contacts[0];
 
                 // reflect the old velocity off the wall's normal (perpendicular) vector
                 Vector3 reflectedVelocity = Vector3.Reflect(oldVelocity, contact.normal);
@@ -63,5 +64,10 @@ public class BulletBehavior : MonoBehaviour
                 transform.rotation = rotation * transform.rotation;
             }
         }
+    }
+
+    public void setDamage(int damageValue)
+    {
+        this.damageValue = damageValue;
     }
 }
