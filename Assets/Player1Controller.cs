@@ -71,6 +71,12 @@ public class Player1Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (hp < 0)
+        {
+            transform.position = new Vector2(-8, 0);
+            hp = 100;
+        }
+
         // Rotate character during key presses
         if (Input.GetKey(KeyCode.H))
             transform.Rotate(Vector3.forward * -4);
@@ -105,8 +111,8 @@ public class Player1Controller : MonoBehaviour
             // Get the original trajectory in the form of a vector2
             Vector2 originalUnitCircleValue = transform.rotation * Vector2.up;
 
-            // Turn that vector2 into an angle in radians by taking the x value and doing inverse cos
-            float originalAngle = Mathf.Acos(originalUnitCircleValue.x);
+            // Turn that vector2 into an angle in radians by taking the arctan of the x and y of the vector2
+            float originalAngle = Mathf.Atan2(originalUnitCircleValue.y, originalUnitCircleValue.x);
 
             // Randomize the angle a bit by adding a value in radians between -pi/180 and pi/180 (this will only randomize it enough for the bullet to still go through the crosshair)
             float newAngle = originalAngle + Random.Range(-Mathf.PI / 180.0f, Mathf.PI / 180.0f);
@@ -116,7 +122,7 @@ public class Player1Controller : MonoBehaviour
 
             bullet.AddForce(newUnitCircleValue * bulletSpeed * Time.deltaTime);
             bullet.gameObject.layer = 2;  // move bullet to a separate layer so that the crosshair raycast does not run into it
-            bullet.setDamage(50);
+            bullet.GetComponent<BulletBehavior>().setDamage(50);
 
             canShoot = false;
             coroutine = shootTimer(1.0f);
@@ -124,7 +130,7 @@ public class Player1Controller : MonoBehaviour
         }
     }
 
-    void takeDamage(int damagePoints)
+    public void takeDamage(int damagePoints)
     {
         hp -= damagePoints;
     }

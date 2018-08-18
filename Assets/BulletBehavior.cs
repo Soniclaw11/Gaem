@@ -34,8 +34,13 @@ public class BulletBehavior : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Destroy(gameObject);
+            if (collision.gameObject.name == "Player1")
+                collision.gameObject.GetComponent<Player1Controller>().takeDamage(damageValue);
+            else if (collision.gameObject.name == "Player2")
+                collision.gameObject.GetComponent<Player2Controller>().takeDamage(damageValue);
+
             // Add knockback to player in direction bullet was traveling at a force of 20 times the velocity
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(gameObject.GetComponent<Rigidbody2D>().velocity * 20);
+            //collision.gameObject.GetComponent<Rigidbody2D>().AddForce(gameObject.GetComponent<Rigidbody2D>().velocity * 20);
         }
         else if (collision.gameObject.tag == "Wall")
         {

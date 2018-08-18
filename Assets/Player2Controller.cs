@@ -16,6 +16,7 @@ public class Player2Controller : MonoBehaviour
     private Sprite crosshairSprite;
     private SpriteRenderer crosshairRenderer;
     public Texture2D crosshairTexture;
+    private int hp;
 
     // Use this for initialization
     void Start()
@@ -26,6 +27,7 @@ public class Player2Controller : MonoBehaviour
         moveVertical = 0.0f;
         speedValue = 250 * Time.deltaTime;
         rb = gameObject.GetComponent<Rigidbody2D>();
+        hp = 100;
 
         crosshair = new GameObject("Crosshair");
         crosshairSprite = Sprite.Create(crosshairTexture, new Rect(0.0f, 0.0f, crosshairTexture.width, crosshairTexture.height), new Vector2(0.5f, 0.5f), 50.0f);
@@ -69,6 +71,12 @@ public class Player2Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (hp < 0)
+        {
+            transform.position = new Vector2(8, 0);
+            hp = 100;
+        }
+
         // Rotate character during key presses
         if (Input.GetKey(KeyCode.M))
             transform.Rotate(Vector3.forward * -4);
@@ -114,11 +122,17 @@ public class Player2Controller : MonoBehaviour
 
             bullet.AddForce(newUnitCircleValue * bulletSpeed * Time.deltaTime);
             bullet.gameObject.layer = 2;  // move bullet to a separate layer so that the crosshair raycast does not run into it
+            bullet.GetComponent<BulletBehavior>().setDamage(50);
 
             canShoot = false;
             coroutine = shootTimer(1.0f);  
             StartCoroutine(coroutine);  // start timer that will turn canShoot back to true after one second
         }
+    }
+
+    public void takeDamage(int damagePoints)
+    {
+        hp -= damagePoints;
     }
 
     IEnumerator shootTimer(float waitTime)
